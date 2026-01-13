@@ -254,44 +254,8 @@
         // ============================================
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyyXNYi_3nBJ0H2j6OyLsBRnBJTwKyJBZgHDkr8Gsy2qIWyrkIyF65mc1AbakzpOE6c/exec';
 
-        // DATA TAMU (Atau bisa diambil dari spreadsheet)
-        let guestData = [
-            {
-                id: 1,
-                nama: "Dr. Budi Santoso, M.Kom",
-                jabatan: "Direktur Utama PT Maju Jaya",
-                alamat: "Jl. Sudirman No. 123, Jakarta Pusat",
-                vip: true
-            },
-            {
-                id: 2,
-                nama: "Siti Nurhaliza",
-                jabatan: "Manager Marketing",
-                alamat: "Jl. Gatot Subroto No. 45, Jakarta Selatan",
-                vip: false
-            },
-            {
-                id: 3,
-                nama: "Ir. Ahmad Wijaya, ST",
-                jabatan: "Komisaris PT Sejahtera Abadi",
-                alamat: "Jl. Thamrin No. 78, Jakarta Pusat",
-                vip: true
-            },
-            {
-                id: 4,
-                nama: "Dewi Lestari",
-                jabatan: "Kepala Bagian HRD",
-                alamat: "Jl. Kuningan No. 90, Jakarta Selatan",
-                vip: false
-            },
-            {
-                id: 5,
-                nama: "Prof. Dr. Suryanto, MBA",
-                jabatan: "Rektor Universitas Indonesia",
-                alamat: "Jl. Salemba Raya No. 4, Jakarta Pusat",
-                vip: true
-            }
-        ];
+        // DATA TAMU (Akan diambil dari spreadsheet)
+        let guestData = [];
 
         const searchInput = document.getElementById('searchInput');
         const results = document.getElementById('results');
@@ -301,10 +265,42 @@
         const messageDiv = document.getElementById('message');
 
         let selectedGuest = null;
+        let isLoadingData = false;
+
+        // Load data tamu dari spreadsheet saat halaman dibuka
+        async function loadGuestData() {
+            try {
+                isLoadingData = true;
+                results.innerHTML = '<div class="loading">Memuat data tamu...</div>';
+                
+                const response = await fetch(SCRIPT_URL);
+                const result = await response.json();
+                
+                if (result.status === 'success' && result.data) {
+                    guestData = result.data;
+                    results.innerHTML = '';
+                    console.log(`Berhasil memuat ${guestData.length} data tamu`);
+                } else {
+                    throw new Error('Gagal memuat data tamu');
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                results.innerHTML = '<div class="no-results">❌ Gagal memuat data tamu. Silakan refresh halaman.</div>';
+            } finally {
+                isLoadingData = false;
+            }
+        }
+
+        // Load data saat halaman pertama kali dibuka
+        window.addEventListener('DOMContentLoaded', loadGuestData);
 
         // Event listener untuk pencarian
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase().trim();
+            
+            if (isLoadingData) {
+                return; // Tunggu data selesai dimuat
+            }
             
             if (searchTerm.length === 0) {
                 results.innerHTML = '';
@@ -314,6 +310,11 @@
 
             if (searchTerm.length < 2) {
                 results.innerHTML = '<div class="no-results">Ketik minimal 2 huruf untuk mencari...</div>';
+                return;
+            }
+            
+            if (guestData.length === 0) {
+                results.innerHTML = '<div class="no-results">Data tamu belum dimuat. Silakan refresh halaman.</div>';
                 return;
             }
 
