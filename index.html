@@ -40,9 +40,16 @@
         .flower-top-left {
             top: 0;
             left: 0;
+            width: 300px;        /* BESARIN ukuran elemen */
+            height: 300px;
             background-image: url('https://i.ibb.co.com/7N4mtRzm/Instagram-Post-Design-Background-Remover.png');
-            transform: scaleY(-1);
-            /* GANTI dengan URL gambar bunga Anda */
+            background-size: contain;
+            background-repeat: no-repeat;
+
+            transform: 
+                scaleY(-1)       /* flip vertikal */
+                rotate(0deg)    /* ROTATE */
+                scale(1.5);      /* BESARIN gambar */
         }
 
         .flower-top-right {
