@@ -28,11 +28,11 @@
         /* Elemen Bunga di Pojok */
         .flower-decoration {
             position: fixed;
-            width: 600px;
-            height: 600px;
+            width: 200px;
+            height: 200px;
             background-size: contain;
             background-repeat: no-repeat;
-            opacity: 0.0;
+            opacity: 0.6;
             pointer-events: none;
             z-index: 1;
         }
@@ -40,14 +40,14 @@
         .flower-top-left {
             top: 0;
             left: 0;
-            background-image: url('https://i.ibb.co.com/gFrpvshR/Instagram-Post-Design.png');
+            background-image: url('https://via.placeholder.com/200/FFB6C1/FFF9E3?text=Bunga');
             /* GANTI dengan URL gambar bunga Anda */
         }
 
         .flower-top-right {
             top: 0;
             right: 0;
-            background-image: url('https://i.ibb.co.com/N6fTKWqY/3.png');
+            background-image: url('https://via.placeholder.com/200/FFB6C1/FFF9E3?text=Bunga');
             transform: scaleX(-1);
             /* GANTI dengan URL gambar bunga Anda */
         }
@@ -55,7 +55,7 @@
         .flower-bottom-left {
             bottom: 0;
             left: 0;
-            background-image: url('https://i.ibb.co.com/GfLB2Xtf/4.png');
+            background-image: url('https://via.placeholder.com/200/FFB6C1/FFF9E3?text=Bunga');
             transform: scaleY(-1);
             /* GANTI dengan URL gambar bunga Anda */
         }
@@ -63,7 +63,7 @@
         .flower-bottom-right {
             bottom: 0;
             right: 0;
-            background-image: url('https://i.ibb.co.com/zTLTQwzp/5.png');
+            background-image: url('https://via.placeholder.com/200/FFB6C1/FFF9E3?text=Bunga');
             transform: scale(-1);
             /* GANTI dengan URL gambar bunga Anda */
         }
@@ -116,7 +116,7 @@
 
         .couple-name {
             color: #d63031;
-            font-size: 80px;
+            font-size: 18px;
             font-weight: 600;
             margin: 0;
         }
@@ -224,6 +224,18 @@
             font-weight: bold;
             color: #5C0000;
             margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .guest-id {
+            font-size: 16px;
+            background: linear-gradient(135deg, #8B0000 0%, #5C0000 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
         }
 
         .guest-info {
@@ -264,6 +276,24 @@
             font-size: 12px;
             font-weight: bold;
             margin-top: 10px;
+        }
+
+        .vvip-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #5C0000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.7); }
         }
 
         .action-section {
@@ -319,18 +349,18 @@
             border-radius: 8px;
             text-align: center;
             display: none;
+            font-size: 16px;
+            font-weight: 600;
         }
 
         .message.success {
             background: #A0522D;
             color: white;
-            display: block;
         }
 
         .message.error {
             background: #FFB6C1;
             color: #8B0000;
-            display: block;
         }
 
         .no-results {
@@ -376,7 +406,6 @@
                 <div class="photo-container">
                     <div class="photo-frame">
                         <img src="https://i.ibb.co.com/Gf5vqg9L/Archi-Almas.jpg" alt="Archi & Almas" class="couple-photo">
-                        <!-- GANTI dengan URL foto prewedding Anda (rasio portrait) -->
                     </div>
                     <div class="couple-names">
                         <h1 class="name">Archi</h1>
@@ -395,7 +424,7 @@
 
         <div class="search-box">
             <label>Masukkan Nama Anda</label>
-            <input type="text" class="search-input" id="searchInput" placeholder="Ketik nama atau nama panggilan...">
+            <input type="text" class="search-input" id="searchInput" placeholder="Ketik nama Anda...">
         </div>
 
         <div class="results" id="results"></div>
@@ -500,10 +529,13 @@
         function displayGuests(guests) {
             results.innerHTML = guests.map(guest => `
                 <div class="guest-card" onclick="selectGuest(${guest.id})">
-                    <div class="guest-name">${guest.nama}</div>
+                    <div class="guest-name">
+                        <span>${guest.nama}</span>
+                        <span class="guest-id">#${guest.id}</span>
+                    </div>
                     <div class="guest-info">
-                        <strong>Jabatan:</strong>
-                        <span class="info-content">${guest.jabatan}</span>
+                        <strong>Pangkat:</strong>
+                        <span class="info-content">${guest.pangkat}</span>
                     </div>
                     <div class="guest-info">
                         <strong>Alamat:</strong>
@@ -513,10 +545,10 @@
                         <strong>Undangan:</strong>
                         <span class="info-content">
                             ${guest.undangan}
-                            <span class="undangan-badge">${guest.undangan === 'Pria' ? '🤵 Bapak & Ibu Kelik' : '👰 Bapak & Ibu Mahrur'}</span>
+                            <span class="undangan-badge">${guest.undangan === 'Pria' ? '🤵 Pihak Pria' : '👰 Pihak Wanita'}</span>
                         </span>
                     </div>
-                    ${guest.vip ? '<span class="vip-badge">⭐ VIP GUEST</span>' : ''}
+                    ${guest.vvip ? '<span class="vvip-badge">👑 VVIP GUEST</span>' : guest.vip ? '<span class="vip-badge">⭐ VIP GUEST</span>' : ''}
                 </div>
             `).join('');
         }
@@ -532,10 +564,13 @@
 
             // Show action section
             selectedGuestInfo.innerHTML = `
-                <div class="guest-name">${selectedGuest.nama}</div>
+                <div class="guest-name">
+                    <span>${selectedGuest.nama}</span>
+                    <span class="guest-id">#${selectedGuest.id}</span>
+                </div>
                 <div class="guest-info">
-                    <strong>Jabatan:</strong>
-                    <span class="info-content">${selectedGuest.jabatan}</span>
+                    <strong>Pangkat:</strong>
+                    <span class="info-content">${selectedGuest.pangkat}</span>
                 </div>
                 <div class="guest-info">
                     <strong>Alamat:</strong>
@@ -545,10 +580,10 @@
                     <strong>Undangan:</strong>
                     <span class="info-content">
                         ${selectedGuest.undangan}
-                        <span class="undangan-badge">${selectedGuest.undangan === 'Pria' ? '🤵 Bapak & Ibu Kelik' : '👰 Bapak & Ibu Mahrur'}</span>
+                        <span class="undangan-badge">${selectedGuest.undangan === 'Pria' ? '🤵 Pihak Pria' : '👰 Pihak Wanita'}</span>
                     </span>
                 </div>
-                ${selectedGuest.vip ? '<span class="vip-badge">⭐ VIP GUEST</span>' : ''}
+                ${selectedGuest.vvip ? '<span class="vvip-badge">👑 VVIP GUEST</span>' : selectedGuest.vip ? '<span class="vip-badge">⭐ VIP GUEST</span>' : ''}
             `;
             
             showActionSection();
@@ -581,10 +616,11 @@
             const data = {
                 id: selectedGuest.id,
                 nama: selectedGuest.nama,
-                jabatan: selectedGuest.jabatan,
+                pangkat: selectedGuest.pangkat,
                 alamat: selectedGuest.alamat,
                 undangan: selectedGuest.undangan,
                 vip: selectedGuest.vip,
+                vvip: selectedGuest.vvip,
                 status: 'Hadir',
                 timestamp: new Date().toLocaleString('id-ID')
             };
@@ -622,6 +658,12 @@
         function showMessage(type, text) {
             messageDiv.className = `message ${type}`;
             messageDiv.textContent = text;
+            messageDiv.style.display = 'block';
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
         }
 
         window.selectGuest = selectGuest;
