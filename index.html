@@ -319,18 +319,18 @@
             border-radius: 8px;
             text-align: center;
             display: none;
-            font-size: 16px;
-            font-weight: 600;
         }
 
         .message.success {
             background: #A0522D;
             color: white;
+            display: block;
         }
 
         .message.error {
             background: #FFB6C1;
             color: #8B0000;
+            display: block;
         }
 
         .no-results {
@@ -375,10 +375,13 @@
             <div class="couple-photos">
                 <div class="photo-container">
                     <div class="photo-frame">
-                        <img src="https://i.ibb.co.com/Gf5vqg9L/Archi-Almas.jpg" alt="Archi & Almas" class="couple-photo">
+                        <img src="https://via.placeholder.com/280x350/FFB6C1/ffffff?text=Foto+Prewedding" alt="Archi & Almas" class="couple-photo">
+                        <!-- GANTI dengan URL foto prewedding Anda (rasio portrait) -->
                     </div>
                     <div class="couple-names">
-                        Archi & Almas
+                        <span class="name">Archi</span>
+                        <span class="ampersand">&</span>
+                        <span class="name">Almas</span>
                     </div>
                 </div>
             </div>
@@ -619,12 +622,6 @@
         function showMessage(type, text) {
             messageDiv.className = `message ${type}`;
             messageDiv.textContent = text;
-            messageDiv.style.display = 'block';
-            
-            // Auto hide after 5 seconds
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 5000);
         }
 
         window.selectGuest = selectGuest;
