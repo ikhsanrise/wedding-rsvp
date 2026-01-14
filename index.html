@@ -28,11 +28,11 @@
         /* Elemen Bunga di Pojok */
         .flower-decoration {
             position: fixed;
-            width: 200px;
-            height: 200px;
+            width: 600px;
+            height: 600px;
             background-size: contain;
             background-repeat: no-repeat;
-            opacity: 0.6;
+            opacity: 0.0;
             pointer-events: none;
             z-index: 1;
         }
@@ -40,14 +40,14 @@
         .flower-top-left {
             top: 0;
             left: 0;
-            background-image: url('https://via.placeholder.com/200/FFB6C1/FFF9E3?text=Bunga');
+            background-image: url('https://i.ibb.co.com/gFrpvshR/Instagram-Post-Design.png');
             /* GANTI dengan URL gambar bunga Anda */
         }
 
         .flower-top-right {
             top: 0;
             right: 0;
-            background-image: url('https://via.placeholder.com/200/FFB6C1/FFF9E3?text=Bunga');
+            background-image: url('https://i.ibb.co.com/N6fTKWqY/3.png');
             transform: scaleX(-1);
             /* GANTI dengan URL gambar bunga Anda */
         }
@@ -55,7 +55,7 @@
         .flower-bottom-left {
             bottom: 0;
             left: 0;
-            background-image: url('https://via.placeholder.com/200/FFB6C1/FFF9E3?text=Bunga');
+            background-image: url('https://i.ibb.co.com/GfLB2Xtf/4.png');
             transform: scaleY(-1);
             /* GANTI dengan URL gambar bunga Anda */
         }
@@ -63,7 +63,7 @@
         .flower-bottom-right {
             bottom: 0;
             right: 0;
-            background-image: url('https://via.placeholder.com/200/FFB6C1/FFF9E3?text=Bunga');
+            background-image: url('https://i.ibb.co.com/zTLTQwzp/5.png');
             transform: scale(-1);
             /* GANTI dengan URL gambar bunga Anda */
         }
@@ -116,7 +116,7 @@
 
         .couple-name {
             color: #d63031;
-            font-size: 18px;
+            font-size: 80px;
             font-weight: 600;
             margin: 0;
         }
@@ -375,13 +375,13 @@
             <div class="couple-photos">
                 <div class="photo-container">
                     <div class="photo-frame">
-                        <img src="https://i.ibb.co.com/Gf5vqg9L/Archi-Almas.jpg">
+                        <img src="https://i.ibb.co.com/Gf5vqg9L/Archi-Almas.jpg" alt="Archi & Almas" class="couple-photo">
                         <!-- GANTI dengan URL foto prewedding Anda (rasio portrait) -->
                     </div>
                     <div class="couple-names">
-                        <span class="name">Archi</span>
-                        <span class="ampersand">&</span>
-                        <span class="name">Almas</span>
+                        <h1 class="name">Archi</h1>
+                        <h1 class="ampersand">&</h1>
+                        <h1 class="name">Almas</h1>
                     </div>
                 </div>
             </div>
@@ -513,7 +513,7 @@
                         <strong>Undangan:</strong>
                         <span class="info-content">
                             ${guest.undangan}
-                            <span class="undangan-badge">${guest.undangan === 'Pria' ? '🤵 Pihak Pria' : '👰 Pihak Wanita'}</span>
+                            <span class="undangan-badge">${guest.undangan === 'Pria' ? '🤵 Bapak & Ibu Kelik' : '👰 Bapak & Ibu Mahrur'}</span>
                         </span>
                     </div>
                     ${guest.vip ? '<span class="vip-badge">⭐ VIP GUEST</span>' : ''}
@@ -545,7 +545,7 @@
                     <strong>Undangan:</strong>
                     <span class="info-content">
                         ${selectedGuest.undangan}
-                        <span class="undangan-badge">${selectedGuest.undangan === 'Pria' ? '🤵 Pihak Pria' : '👰 Pihak Wanita'}</span>
+                        <span class="undangan-badge">${selectedGuest.undangan === 'Pria' ? '🤵 Bapak & Ibu Kelik' : '👰 Bapak & Ibu Mahrur'}</span>
                     </span>
                 </div>
                 ${selectedGuest.vip ? '<span class="vip-badge">⭐ VIP GUEST</span>' : ''}
