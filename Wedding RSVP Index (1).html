@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Kehadiran - Archi & Almas</title>
+    <!-- Import Font Brittany (atau alternatif) -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Italiana&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2C1810 0%, #5C0000 50%, #8B0000 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Elemen Bunga di Pojok */
+        .flower-decoration {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .flower-top-left {
+            top: 0;
+            left: 0;
+            background-image: url('https://i.ibb.co.com/gFrpvshR/Instagram-Post-Design.png');
+            /* GANTI dengan URL gambar bunga Anda */
+        }
+
+        .flower-top-right {
+            top: 0;
+            right: 0;
+            background-image: url('https://i.ibb.co.com/N6fTKWqY/3.png');
+            transform: scaleX(-1);
+            /* GANTI dengan URL gambar bunga Anda */
+        }
+
+        .flower-bottom-left {
+            bottom: 0;
+            left: 0;
+            background-image: url('https://i.ibb.co.com/GfLB2Xtf/4.png');
+            transform: scaleY(-1);
+            /* GANTI dengan URL gambar bunga Anda */
+        }
+
+        .flower-bottom-right {
+            bottom: 0;
+            right: 0;
+            background-image: url('https://i.ibb.co.com/zTLTQwzp/5.png');
+            transform: scale(-1);
+            /* GANTI dengan URL gambar bunga Anda */
+        }
+
+        .container {
+            background: #FFF9E3;
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .couple-photos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .photo-container {
+            text-align: center;
+        }
+
+        .photo-frame {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #d63031;
+            box-shadow: 0 4px 15px rgba(214, 48, 49, 0.3);
+            margin: 0 auto 10px;
+            background: white;
+        }
+
+        .couple-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .couple-name {
+            color: #d63031;
+            font-size: 80px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .heart-divider {
+            font-size: 40px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .wedding-date {
+            background: linear-gradient(135deg, #FFF9E3 0%, #FFE6E6 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid #FFB6C1;
+            text-align: center;
+        }
+
+        .date-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: #8B0000;
+            margin-bottom: 8px;
+        }
+
+        .venue-text {
+            font-size: 17px;
+            color: #5C0000;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .header h1 {
+            color: #8B0000;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #636e72;
+            font-size: 16px;
+        }
+
+        .search-box {
+            margin-bottom: 25px;
+        }
+
+        .search-box label {
+            display: block;
+            margin-bottom: 10px;
+            color: #2d3436;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #FFB6C1;
+            border-radius: 10px;
+            font-size: 18px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #8B0000;
+        }
+
+        .results {
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .guest-card {
+            background: #FFF9E3;
+            border: 2px solid #FFB6C1;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .guest-card:hover {
+            border-color: #8B0000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.2);
+        }
+
+        .guest-card.selected {
+            border-color: #8B0000;
+            background: #FFE6E6;
+        }
+
+        .guest-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #5C0000;
+            margin-bottom: 8px;
+        }
+
+        .guest-info {
+            color: #A0522D;
+            margin-bottom: 5px;
+            font-size: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        .guest-info strong {
+            color: #5C0000;
+            min-width: 80px;
+        }
+
+        .guest-info .info-content {
+            flex: 1;
+        }
+
+        .undangan-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        .vip-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B0000 0%, #5C0000 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .action-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #dfe6e9;
+            display: none;
+        }
+
+        .action-section.show {
+            display: block;
+        }
+
+        .selected-guest-info {
+            background: #FFE6E6;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #8B0000;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #A0522D 0%, #8B0000 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .confirm-btn:disabled {
+            background: #b2bec3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .message.success {
+            background: #A0522D;
+            color: white;
+            display: block;
+        }
+
+        .message.error {
+            background: #FFB6C1;
+            color: #8B0000;
+            display: block;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #636e72;
+            font-style: italic;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #636e72;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            border: 3px solid #FFB6C1;
+            border-top: 3px solid #8B0000;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Dekorasi Bunga di Pojok -->
+    <div class="flower-decoration flower-top-left"></div>
+    <div class="flower-decoration flower-top-right"></div>
+    <div class="flower-decoration flower-bottom-left"></div>
+    <div class="flower-decoration flower-bottom-right"></div>
+
+    <div class="container">
+        <div class="header">
+            <p class="the-wedding-of">The Wedding Of</p>
+            <div class="couple-photos">
+                <div class="photo-container">
+                    <div class="photo-frame">
+                        <img src="https://i.ibb.co.com/Gf5vqg9L/Archi-Almas.jpg" alt="Archi & Almas" class="couple-photo">
+                        <!-- GANTI dengan URL foto prewedding Anda (rasio portrait) -->
+                    </div>
+                    <div class="couple-names">
+                        <h1 class="name">Archi</h1>
+                        <h1 class="ampersand">&</h1>
+                        <h1 class="name">Almas</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="wedding-date">
+                <p class="date-text">📅 Sabtu, 24 Januari 2026</p>
+                <p class="venue-text">📍 Gedung Balai Prajurit RM Moedjono Poerbonegoro, Juanda Sidoarjo</p>
+            </div>
+            <h1>💐 Konfirmasi Kehadiran 💐</h1>
+            <p>Cari nama Anda untuk konfirmasi kehadiran</p>
+        </div>
+
+        <div class="search-box">
+            <label>Masukkan Nama Anda</label>
+            <input type="text" class="search-input" id="searchInput" placeholder="Ketik nama atau nama panggilan...">
+        </div>
+
+        <div class="results" id="results"></div>
+
+        <div class="action-section" id="actionSection">
+            <div class="selected-guest-info" id="selectedGuestInfo"></div>
+            <button class="confirm-btn" id="confirmBtn">
+                <span>✓</span> Konfirmasi Kehadiran
+            </button>
+        </div>
+
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        // ============================================
+        // KONFIGURASI - GANTI URL GOOGLE APPS SCRIPT
+        // ============================================
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxiSOFH6LYeTMBoImvliZohUF-6QvXdzSKmbS1i6vmzZmnI4NzV7QyF4JzduoFGF6Op/exec';
+
+        // DATA TAMU (Akan diambil dari spreadsheet)
+        let guestData = [];
+
+        const searchInput = document.getElementById('searchInput');
+        const results = document.getElementById('results');
+        const actionSection = document.getElementById('actionSection');
+        const selectedGuestInfo = document.getElementById('selectedGuestInfo');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const messageDiv = document.getElementById('message');
+
+        let selectedGuest = null;
+        let isLoadingData = false;
+
+        // Load data tamu dari spreadsheet saat halaman dibuka
+        async function loadGuestData() {
+            try {
+                isLoadingData = true;
+                results.innerHTML = '<div class="loading">Memuat data tamu...</div>';
+                
+                const response = await fetch(SCRIPT_URL);
+                const result = await response.json();
+                
+                if (result.status === 'success' && result.data) {
+                    guestData = result.data;
+                    results.innerHTML = '';
+                    console.log(`Berhasil memuat ${guestData.length} data tamu`);
+                } else {
+                    throw new Error('Gagal memuat data tamu');
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                results.innerHTML = '<div class="no-results">❌ Gagal memuat data tamu. Silakan refresh halaman.</div>';
+            } finally {
+                isLoadingData = false;
+            }
+        }
+
+        // Load data saat halaman pertama kali dibuka
+        window.addEventListener('DOMContentLoaded', loadGuestData);
+
+        // Event listener untuk pencarian
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            
+            if (isLoadingData) {
+                return; // Tunggu data selesai dimuat
+            }
+            
+            if (searchTerm.length === 0) {
+                results.innerHTML = '';
+                hideActionSection();
+                return;
+            }
+
+            if (searchTerm.length < 2) {
+                results.innerHTML = '<div class="no-results">Ketik minimal 2 huruf untuk mencari...</div>';
+                return;
+            }
+            
+            if (guestData.length === 0) {
+                results.innerHTML = '<div class="no-results">Data tamu belum dimuat. Silakan refresh halaman.</div>';
+                return;
+            }
+
+            searchGuests(searchTerm);
+        });
+
+        function searchGuests(searchTerm) {
+            const filtered = guestData.filter(guest => 
+                guest.nama.toLowerCase().includes(searchTerm)
+            );
+
+            if (filtered.length === 0) {
+                results.innerHTML = '<div class="no-results">Nama tidak ditemukan. Silakan periksa kembali nama Anda.</div>';
+                hideActionSection();
+                return;
+            }
+
+            displayGuests(filtered);
+        }
+
+        function displayGuests(guests) {
+            results.innerHTML = guests.map(guest => `
+                <div class="guest-card" onclick="selectGuest(${guest.id})">
+                    <div class="guest-name">${guest.nama}</div>
+                    <div class="guest-info">
+                        <strong>Jabatan:</strong>
+                        <span class="info-content">${guest.jabatan}</span>
+                    </div>
+                    <div class="guest-info">
+                        <strong>Alamat:</strong>
+                        <span class="info-content">${guest.alamat}</span>
+                    </div>
+                    <div class="guest-info">
+                        <strong>Undangan:</strong>
+                        <span class="info-content">
+                            ${guest.undangan}
+                            <span class="undangan-badge">${guest.undangan === 'Pria' ? '🤵 Bapak & Ibu Kelik' : '👰 Bapak & Ibu Mahrur'}</span>
+                        </span>
+                    </div>
+                    ${guest.vip ? '<span class="vip-badge">⭐ VIP GUEST</span>' : ''}
+                </div>
+            `).join('');
+        }
+
+        function selectGuest(guestId) {
+            selectedGuest = guestData.find(g => g.id === guestId);
+            
+            // Update visual selection
+            document.querySelectorAll('.guest-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+
+            // Show action section
+            selectedGuestInfo.innerHTML = `
+                <div class="guest-name">${selectedGuest.nama}</div>
+                <div class="guest-info">
+                    <strong>Jabatan:</strong>
+                    <span class="info-content">${selectedGuest.jabatan}</span>
+                </div>
+                <div class="guest-info">
+                    <strong>Alamat:</strong>
+                    <span class="info-content">${selectedGuest.alamat}</span>
+                </div>
+                <div class="guest-info">
+                    <strong>Undangan:</strong>
+                    <span class="info-content">
+                        ${selectedGuest.undangan}
+                        <span class="undangan-badge">${selectedGuest.undangan === 'Pria' ? '🤵 Bapak & Ibu Kelik' : '👰 Bapak & Ibu Mahrur'}</span>
+                    </span>
+                </div>
+                ${selectedGuest.vip ? '<span class="vip-badge">⭐ VIP GUEST</span>' : ''}
+            `;
+            
+            showActionSection();
+        }
+
+        function showActionSection() {
+            actionSection.classList.add('show');
+            actionSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function hideActionSection() {
+            actionSection.classList.remove('show');
+            selectedGuest = null;
+        }
+
+        // Konfirmasi kehadiran
+        confirmBtn.addEventListener('click', async () => {
+            if (!selectedGuest) return;
+
+            if (SCRIPT_URL === 'MASUKKAN_URL_GOOGLE_SCRIPT_ANDA_DI_SINI') {
+                showMessage('error', '⚠️ Silakan setup Google Apps Script terlebih dahulu.');
+                console.log('%cCara Setup:', 'color: blue; font-size: 16px; font-weight: bold;');
+                console.log('Lihat instruksi lengkap di bagian komentar HTML');
+                return;
+            }
+
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = '<div class="spinner"></div>';
+
+            const data = {
+                id: selectedGuest.id,
+                nama: selectedGuest.nama,
+                jabatan: selectedGuest.jabatan,
+                alamat: selectedGuest.alamat,
+                undangan: selectedGuest.undangan,
+                vip: selectedGuest.vip,
+                status: 'Hadir',
+                timestamp: new Date().toLocaleString('id-ID')
+            };
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    showMessage('success', `✅ Terima kasih! Kehadiran Anda telah dikonfirmasi.`);
+                    
+                    // Reset form
+                    setTimeout(() => {
+                        searchInput.value = '';
+                        results.innerHTML = '';
+                        hideActionSection();
+                        messageDiv.style.display = 'none';
+                    }, 3000);
+                } else {
+                    throw new Error(result.message || 'Terjadi kesalahan');
+                }
+            } catch (error) {
+                showMessage('error', '❌ Gagal mengkonfirmasi kehadiran. Silakan coba lagi.');
+                console.error('Error:', error);
+            } finally {
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = '<span>✓</span> Konfirmasi Kehadiran';
+            }
+        });
+
+        function showMessage(type, text) {
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = text;
+        }
+
+        window.selectGuest = selectGuest;
+    </script>
+
+    <!-- 
+    =================================================================
+    SETUP GOOGLE APPS SCRIPT
+    =================================================================
+    
+    ADA 2 SPREADSHEET YANG DIPERLUKAN:
+    
+    1. SPREADSHEET DATA TAMU (Sheet1: "Data Tamu")
+       Kolom: ID | Nama Lengkap | Jabatan | Alamat | VIP
+       
+    2. SPREADSHEET KEHADIRAN (Sheet2: "Kehadiran")
+       Kolom: Timestamp | ID | Nama Lengkap | Jabatan | Alamat | VIP | Status
+    
+    -----------------------------------------------------------------
+    KODE GOOGLE APPS SCRIPT:
+    -----------------------------------------------------------------
+    
+    function doGet(e) {
+      // Untuk mengambil data tamu (optional, jika ingin load data dari spreadsheet)
+      try {
+        const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Data Tamu');
+        const data = sheet.getDataRange().getValues();
+        const guests = [];
+        
+        for (let i = 1; i < data.length; i++) {
+          guests.push({
+            id: data[i][0],
+            nama: data[i][1],
+            jabatan: data[i][2],
+            alamat: data[i][3],
+            vip: data[i][4] === 'Ya' || data[i][4] === true
+          });
+        }
+        
+        return ContentService.createTextOutput(JSON.stringify({
+          status: 'success',
+          data: guests
+        })).setMimeType(ContentService.MimeType.JSON);
+        
+      } catch (error) {
+        return ContentService.createTextOutput(JSON.stringify({
+          status: 'error',
+          message: error.toString()
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+
+    function doPost(e) {
+      try {
+        const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Kehadiran');
+        
+        // Setup header jika belum ada
+        if (sheet.getLastRow() === 0) {
+          sheet.appendRow(['Timestamp', 'ID', 'Nama Lengkap', 'Jabatan', 'Alamat', 'VIP', 'Status']);
+          sheet.getRange(1, 1, 1, 7).setFontWeight('bold');
+          sheet.getRange(1, 1, 1, 7).setBackground('#d63031');
+          sheet.getRange(1, 1, 1, 7).setFontColor('#ffffff');
+        }
+        
+        const data = JSON.parse(e.postData.contents);
+        
+        // Cek apakah tamu sudah konfirmasi sebelumnya
+        const existingData = sheet.getDataRange().getValues();
+        for (let i = 1; i < existingData.length; i++) {
+          if (existingData[i][1] == data.id) {
+            return ContentService.createTextOutput(JSON.stringify({
+              status: 'error',
+              message: 'Anda sudah melakukan konfirmasi kehadiran sebelumnya'
+            })).setMimeType(ContentService.MimeType.JSON);
+          }
+        }
+        
+        // Simpan data kehadiran
+        sheet.appendRow([
+          data.timestamp,
+          data.id,
+          data.nama,
+          data.jabatan,
+          data.alamat,
+          data.vip ? 'Ya' : 'Tidak',
+          data.status
+        ]);
+        
+        return ContentService.createTextOutput(JSON.stringify({
+          status: 'success',
+          message: 'Kehadiran berhasil dikonfirmasi'
+        })).setMimeType(ContentService.MimeType.JSON);
+        
+      } catch (error) {
+        return ContentService.createTextOutput(JSON.stringify({
+          status: 'error',
+          message: error.toString()
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+
+    -----------------------------------------------------------------
+    LANGKAH SETUP:
+    -----------------------------------------------------------------
+    
+    1. Buat Google Spreadsheet baru dengan 2 sheet:
+       - Sheet 1: "Data Tamu" (isi dengan data tamu Anda)
+       - Sheet 2: "Kehadiran" (kosongkan, akan otomatis terisi)
+    
+    2. Di sheet "Data Tamu", buat header:
+       ID | Nama Lengkap | Jabatan | Alamat | VIP
+       
+    3. Isi data tamu Anda (contoh):
+       1 | Dr. Budi Santoso | Direktur | Jl. Sudirman 123 | Ya
+       2 | Siti Nurhaliza | Manager | Jl. Gatot 45 | Tidak
+    
+    4. Klik Extensions > Apps Script
+    
+    5. Paste kode di atas
+    
+    6. Deploy sebagai Web App:
+       - Klik Deploy > New deployment
+       - Pilih type: Web app
+       - Execute as: Me
+       - Who has access: Anyone
+       - Deploy
+    
+    7. Copy URL dan paste ke variabel SCRIPT_URL di HTML (baris 236)
+    
+    8. SELESAI! Form siap digunakan
+    
+    =================================================================
+    -->
+</body>
+</html>
